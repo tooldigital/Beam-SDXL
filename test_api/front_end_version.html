@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API POST Request</title>
+</head>
+<body>
+    <input type="text" id="inputField" placeholder="Prompt" value="Soft pink roses, white Chinese peony, tiny apple blossom flowers, eucalyptus leaves, twigs of cranberries, twigs of copper pepper berries all arrangement into a cute beautiful flowers arrangement on a pink nickel mug. The mug is sitting on a thick white book with golden cover image design. Sunny, bright image. Ad copy, huge copy space on top of the image, negative space, hd, 8k, blurry dreamy background, beautiful pictures">
+    <button id="postButton">Send to Beam</button>
+    <img id="resultImage" src='https://picsum.photos/1024' alt="Returned Image" style="margin-top: 20px;">
+<script>
+    async function postData() {
+        const imageElement = document.getElementById('resultImage');
+        imageElement.src = '';
+        const url = 'https://apps.beam.cloud/hmvz6';
+
+         // Get content from the input text field
+         const inputContent = document.getElementById('inputField').value;
+     
+        // Custom headers
+        const headers = new Headers({
+            'Authorization': 'Basic ' + 'NDZhYTMzMTg3N2UxNmVkYTg2OTkxYTVmNTg1MTc5ZTM6ZThiNGIzNGI3NDAwYjczZTgyZTk2ZjIyZTlmZWQ4ZDM=',
+            'Content-Type': 'application/json' // Assuming you're sending JSON data
+        });
+
+        // Data you want to send in the POST request
+        const data = {
+            prompt: inputContent
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const responseData = await response.json();
+            console.log(responseData);
+
+             //const responseData = await response.json();
+             //const responseData = await response.data(); // Assuming the response is just the base64 string
+            const imageElement = document.getElementById('resultImage');
+            imageElement.src = 'data:image/png;base64,' + responseData['pred'];
+            console.log(responseData['pred']);
+        } catch (error) {
+            console.error('Error posting data:', error);
+        }
+    }
+
+    // Call the function to make the POST request
+    document.getElementById('postButton').addEventListener('click', postData);
+</script>
+
+</body>
+</html>
