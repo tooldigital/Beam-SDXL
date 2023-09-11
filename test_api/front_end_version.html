@@ -6,9 +6,25 @@
     <title>API POST Request</title>
 </head>
 <body>
-    <input type="text" id="inputField" placeholder="Prompt" value="Soft pink roses, white Chinese peony, tiny apple blossom flowers, eucalyptus leaves, twigs of cranberries, twigs of copper pepper berries all arrangement into a cute beautiful flowers arrangement on a pink nickel mug. The mug is sitting on a thick white book with golden cover image design. Sunny, bright image. Ad copy, huge copy space on top of the image, negative space, hd, 8k, blurry dreamy background, beautiful pictures">
+    <input type="text" id="inputField" placeholder="Prompt" value="a car">
     <button id="postButton">Send to Beam</button>
-    <img id="resultImage" src='https://picsum.photos/1024' alt="Returned Image" style="margin-top: 20px;">
+    <select id="dropdown">
+        <option value="None">None</option>
+        <option value="3D Model">3D Model</option>
+        <option value="Analog Film">Analog Film</option>
+        <option value="Anime">Anime</option>
+        <option value="Pencil Sketch">Pencil Sketch</option>
+        <option value="Comic Book">Comic Book</option>
+        <option value="Digital Art">Digital Art</option>
+        <option value="Lowpoly">Lowpoly</option>
+        <option value="Photographic">Photographic</option>
+        <option value="Abstract">Abstract</option>
+        <option value="Watercolor">Watercolor</option>
+        <option value="Monochrome">Monochrome</option>
+    </select>    
+    <input type="number" id="numberInput" placeholder=0 value=0>
+    <img id="resultImage" src='' alt="Returned Image" style="margin-top: 20px;">
+    
 <script>
     async function postData() {
         const imageElement = document.getElementById('resultImage');
@@ -16,8 +32,17 @@
         const url = 'https://apps.beam.cloud/hmvz6';
 
          // Get content from the input text field
-         const inputContent = document.getElementById('inputField').value;
-     
+        const inputContent = document.getElementById('inputField').value;
+
+        var dropdown = document.getElementById("dropdown");
+        
+        // Get the selected value from the dropdown
+        const selectedValueDropDown = dropdown.options[dropdown.selectedIndex].value;
+
+        // Get the value from the number input
+        var numberInput = document.getElementById("numberInput");
+        const inputValue = numberInput.value;
+        
         // Custom headers
         const headers = new Headers({
             'Authorization': 'Basic ' + 'NDZhYTMzMTg3N2UxNmVkYTg2OTkxYTVmNTg1MTc5ZTM6ZThiNGIzNGI3NDAwYjczZTgyZTk2ZjIyZTlmZWQ4ZDM=',
@@ -26,7 +51,9 @@
 
         // Data you want to send in the POST request
         const data = {
-            prompt: inputContent
+            prompt: inputContent,
+            style: selectedValueDropDown,
+            seed: parseInt(inputValue)
         };
 
         try {
@@ -45,8 +72,8 @@
              //const responseData = await response.json();
              //const responseData = await response.data(); // Assuming the response is just the base64 string
             const imageElement = document.getElementById('resultImage');
-            imageElement.src = 'data:image/png;base64,' + responseData['pred'];
-            console.log(responseData['pred']);
+            imageElement.src = 'data:image/png;base64,' + responseData['image'];
+            //console.log(responseData['pred']);
         } catch (error) {
             console.error('Error posting data:', error);
         }

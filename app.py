@@ -85,7 +85,6 @@ def set_style(prompt, style):
     else:
         final_prompt =prompt
 
-
     return final_prompt,negative_prompt
 
 def load_models():
@@ -128,8 +127,8 @@ def doSDXL(**inputs):
     image.save(buffered, format='JPEG',quality=80)
     img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-    #print(fprompt)
-    #print(fnegprompt)
+    print(fprompt)
+    print(fnegprompt)
 
     return {"image": img_str}
 
