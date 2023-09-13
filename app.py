@@ -110,6 +110,9 @@ def doSDXL(**inputs):
     prompt = inputs["prompt"]
     style = inputs["style"]
     seed = inputs["seed"]
+    w = inputs["width"]
+    h = inputs["height"]
+
 
     if(seed == 0):
         seed = random.randint(0, MAX_SEED)
@@ -119,7 +122,7 @@ def doSDXL(**inputs):
     fprompt, fnegprompt = set_style(prompt,style)
 
 
-    int_image = pipe(fprompt, prompt_2="", negative_prompt=fnegprompt, negative_prompt_2="", num_inference_steps=50, height=1024, width=1024, guidance_scale=10, num_images_per_prompt=1, generator=generator, output_type="latent").images
+    int_image = pipe(fprompt, prompt_2="", negative_prompt=fnegprompt, negative_prompt_2="", num_inference_steps=50, height=h, width=w, guidance_scale=10, num_images_per_prompt=1, generator=generator, output_type="latent").images
  
     image = refiner(prompt=prompt, prompt_2="", negative_prompt="", negative_prompt_2="", image=int_image).images[0]   
     
