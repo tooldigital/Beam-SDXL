@@ -56,7 +56,7 @@ def set_style(prompt, style):
         final_prompt= f"cinematic film still {prompt} . shallow depth of field, vignette, highly detailed, high budget, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy"
         negative_prompt = f"anime, cartoon, graphic, text, painting, crayon, graphite, abstract, glitch, deformed, mutated, ugly, disfigured"
     elif style == "Pencil Sketch":
-        final_prompt= f"pencil sketch {prompt}, graphic"
+        final_prompt= f"black and white, pencil sketch {prompt}, graphic, rough, lines"
         negative_prompt = f"photo, deformed, realism, disfigured, deformed, glitch, noisy, realistic"
     elif style == "Comic Book":
         final_prompt= f"comic {prompt} . graphic illustration, comic art, graphic novel art, vibrant, highly detailed"
@@ -101,7 +101,7 @@ def load_models():
 
     return pipe, refiner
 
-@app.rest_api(loader=load_models)
+@app.rest_api(loader=load_models, keep_warm_seconds=180)
 def doSDXL(**inputs):
     # Grab inputs passed to the API
 
