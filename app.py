@@ -101,7 +101,7 @@ def load_models():
 
     return pipe, refiner
 
-@app.rest_api(loader=load_models, keep_warm_seconds=180)
+@app.rest_api(loader=load_models, keep_warm_seconds=300)
 def doSDXL(**inputs):
     # Grab inputs passed to the API
 
