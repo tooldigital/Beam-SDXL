@@ -124,7 +124,7 @@ def doSDXL(**inputs):
 
     int_image = pipe(fprompt, prompt_2="", negative_prompt=fnegprompt, negative_prompt_2="", num_inference_steps=50, height=h, width=w, guidance_scale=10, num_images_per_prompt=1, generator=generator, output_type="latent").images
  
-    image = refiner(prompt=prompt, prompt_2="", negative_prompt="", negative_prompt_2="", image=int_image).images[0]   
+    image = refiner(prompt=prompt, prompt_2="", negative_prompt=fnegprompt, negative_prompt_2="", image=int_image).images[0]   
     
     buffered = BytesIO()
     image.save(buffered, format='JPEG',quality=80)
