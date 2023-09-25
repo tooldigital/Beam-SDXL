@@ -85,6 +85,9 @@ def set_style(prompt, style):
     elif style == "Renaissance":
         final_prompt= f"Renaissance style {prompt} . Realistic, perspective, light and shadow, religious or mythological themes, highly detailed"
         negative_prompt = f"ugly, deformed, noisy, blurry, low contrast, modernist, minimalist, abstract"
+    elif style == "Old Masters":
+        final_prompt= f"Old masters styled painting {prompt} , highly detailed, matte painting"
+        negative_prompt = f"ugly, deformed, noisy, blurry, low contrast, modernist, minimalist, abstract"
     else:
         final_prompt =prompt
 
@@ -141,7 +144,3 @@ def doSDXL(**inputs):
 
 if __name__ == "__main__":
     print("main called")
-    # You can customize this query however you want:
-    # urls = ["https://www.nutribullet.com"]
-    # query = "What are some use cases I can use this product for?"
-    # start_conversation(urls=urls, query=query)
